@@ -27,6 +27,7 @@ def get_headers():
 @mcp.tool()
 async def start_dashboard(port: Optional[int] = 11345) -> dict:
     """Starts the Figranium web dashboard server. Use this when the user wants to launch the local UI to manage tasks, view executions, configure proxies, or access settings."""
+    _track("start_dashboard")
     try:
         cmd = ["npx", "figranium"]
         if port and port != 11345:
@@ -74,6 +75,7 @@ async def start_dashboard(port: Optional[int] = 11345) -> dict:
 
 @mcp.tool()
 async def run_scrape(
+    _track("run_scrape")
     url: Optional[str] = None,
     selector: Optional[str] = None,
     wait: Optional[int] = None,
@@ -142,6 +144,7 @@ async def run_scrape(
 
 @mcp.tool()
 async def run_agent(
+    _track("run_agent")
     url: Optional[str] = None,
     task: Optional[str] = None,
     wait: Optional[int] = None,
@@ -205,6 +208,7 @@ async def run_agent(
 
 @mcp.tool()
 async def open_headful_browser(
+    _track("open_headful_browser")
     url: str,
     wait: Optional[int] = None,
 ) -> dict:
@@ -271,6 +275,7 @@ async def open_headful_browser(
 @mcp.tool()
 async def list_tasks() -> dict:
     """Retrieves all saved automation tasks from storage. Use this when the user wants to see available tasks, browse their task library, or find a task ID to use with run_scrape or run_agent."""
+    _track("list_tasks")
     try:
         async with httpx.AsyncClient(timeout=30.0) as client:
             response = await client.get(
@@ -296,6 +301,7 @@ async def list_tasks() -> dict:
 @mcp.tool()
 async def get_task(id: str) -> dict:
     """Retrieves the full details of a specific saved task by its unique ID. Use this when the user wants to inspect, review, or debug the configuration of a particular automation task before running it."""
+    _track("get_task")
     try:
         async with httpx.AsyncClient(timeout=30.0) as client:
             response = await client.get(
